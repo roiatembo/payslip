@@ -1,0 +1,1 @@
+[19-Apr-2023 06:19:48 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, bool given in /home/dithetoc/payslip.theitmogul.co.za/payinfo.php on line 12

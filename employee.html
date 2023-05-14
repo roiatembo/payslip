@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Add Employee</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    	<!-- navbar stylsheet -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="css/navstyle.css">
+
+	</head>
+	<body>
+
+  <!-- navbar section -->
+
+	<div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+          <div class="site-mobile-menu-close mt-3">
+            <span class="icon-close2 js-menu-toggle"></span>
+          </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+      </div>
+
+      <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
+
+        <div class="container">
+          <div class="row align-items-center position-relative">
+
+
+            <div class="site-logo">
+              <img src="images/logo_img.jpg" width="80px">
+            </div>
+
+            <div class="col-12">
+              <nav class="site-navigation text-right ml-auto " role="navigation">
+
+                <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
+                  <li><a href="employee.html" class="nav-link">Add Employees</a></li>
+                  <li><a href="#" class="nav-link">View Employees</a></li>
+
+                  <li><a href="payslip.php" class="nav-link">Enter Payslip</a></li>
+
+                  <li><a href="generateslip.php" class="nav-link">Generate Payslip</a></li>
+                </ul>
+              </nav>
+
+            </div>
+
+            <div class="toggle-button d-inline-block d-lg-none"><a href="#" class="site-menu-toggle py-5 js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
+
+          </div>
+        </div>
+
+      </header>
+        <div class="container-fluid px-1 py-5 mx-auto">
+            <div class="row d-flex justify-content-center">
+                <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+                    <h3>Add an Employee</h3>
+                    <div class="card">
+                        <span style="color: green;" id="result"></span>
+                        <h5 class="text-center mb-4">Add Employee Details</h5>
+                        <form id="employeeForm" class="form-card" onsubmit="event.preventDefault()">
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Full Name<span class="text-danger"> *</span></label> <input type="text" id="fname" name="fullName" placeholder="Enter full name" onblur="validate(1)"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">ID Number<span class="text-danger"> *</span></label> <input type="text" id="lname" name="idNo" placeholder="Enter ID Number" onblur="validate(2)"> </div>
+                            </div>
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Address<span class="text-danger"> *</span></label> <input type="text" id="email" name="address" placeholder="" onblur="validate(3)"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Phone number<span class="text-danger"> *</span></label> <input type="text" id="mob" name="phoneNumber" placeholder="" onblur="validate(4)"> </div>
+                            </div>
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Occupation<span class="text-danger"> *</span></label> <input type="text" id="job" name="occupation" placeholder="" onblur="validate(5)"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Date of Employment<span class="text-danger"> *</span></label> <input type="date" id="mob" name="date" placeholder="" onblur="validate(4)"> </div>
+                            </div>
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Emplyee Nr<span class="text-danger"> *</span></label> <input type="number" id="email" name="employeeNumber" placeholder="" onblur="validate(3)"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Income Tax No.<span class="text-danger"> </span></label> <input type="text" id="mob" name="taxNumber" placeholder="" value="null"> </div>
+                            </div>
+                            <h5 class="text-center mb-4">Add Banking Details</h5>
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Bank Name<span class="text-danger"> *</span></label> <input type="text" id="job" name="bankName" placeholder="" onblur="validate(5)"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Account Number<span class="text-danger"> *</span></label> <input type="text" id="mob" name="accountNumber" placeholder="" onblur="validate(4)"> </div>
+                            </div>
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Branch Name<span class="text-danger"> *</span></label> <input type="text" id="email" name="branchName" placeholder="" onblur="validate(3)"> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Branch Code<span class="text-danger"> *</span></label> <input type="text" id="mob" name="branchCode" placeholder="" onblur="validate(4)"> </div>
+                            </div>
+                            <div class="row justify-content-end">
+                                <span style="color: red;" id="error"></span><br />
+                                <div class="form-group col-sm-6"> <button type="submit" class="btn-block btn-primary">Submit</button> </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/submit.js"></script>
+    </body>
+</html>
