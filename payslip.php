@@ -74,7 +74,7 @@
                             <div class="row justify-content-between text-left">
                                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Branch</label> <input type="text" id="branch" name="branch" placeholder=""> </div>
                                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Branch Code</label> <input type="text" id="branchCode" name="branchCode" placeholder=""> </div>
-                                <input type="text" name="bankingDetailsId" id="bankingDetailsId">
+                                <input type="hidden" name="bankingDetailsId" id="bankingDetailsId">
                             </div>
                             <h6 class="text-center mb-4">Enter Month and Year Of Payslip</h6>
                             <div class="row justify-content-between text-left">

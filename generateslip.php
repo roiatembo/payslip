@@ -1,131 +1,27 @@
-<?php
-        // $currentdate = date(d-m-Y);
-        $serverhost = "localhost";
-        $servername = "dithetoc_payslip";
-        $username = "dithetoc_roia";
-        $password = "rolanga4";
-        
-        // Create connection
-        $conn = mysqli_connect($serverhost, $username, $password, $servername);
-        
-        // Check connection
-        if (!$conn) {
-          die("Connection failed: " . mysqli_connect_error());
-        }
-?>
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-  	<title>Enter Payslip</title>
+<head>
+    <title>Generate Payslip</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
 
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	
-	        	<!-- navbar stylsheet -->
-                <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-
-<link rel="stylesheet" href="fonts/icomoon/style.css">
-
-<link rel="stylesheet" href="css/owl.carousel.min.css">
-
-<!-- Style -->
-<link rel="stylesheet" href="css/navstyle.css">
+    <!-- Consolidated CSS imports -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/navstyle.css">
     <link rel="stylesheet" href="css/form.css">
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- Consolidated JavaScript imports -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-          <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-    <script>
-          $( function() {
-            var availableTags = [
-            <?php
-              $sql = "SELECT id, fullName, employeeNumber FROM employees";
-              $result = mysqli_query($conn, $sql);
-        
-                if (mysqli_num_rows($result) > 0) {
-                // output data of each row
-                while($row = mysqli_fetch_assoc($result)) {
-                    $fullName = $row["fullName"];
-                    $employeeId = $row["id"];
-                echo "
-                { value: \"\",
-                    label: \"$fullName\",
-                    empn: \"$employeeId\"
-                },
-                
-                ";
-                }
-                } ?>
-                
-             
-            ];
-            $( "#fname" ).autocomplete({
-              source: availableTags,
-              select: function (event, ui) {
-                $("#employeeNumber").val(ui.item.empn);
-                $("#fname").val(ui.item.label);
-                var employeeName = ui.item.label;
-                // send selected name to php page
-                var employeeData = {'employeeNumber':ui.item.empn} 
-                $.ajax({
-                    type: "POST",
-                    url: "payinfo.php",
-                    data: employeeData,
-                    success: function(data) {
-                        document.getElementById("payslipsName").innerHTML = "List of Payslips for " + employeeName;
-                        document.getElementById("listOfPayslips").innerHTML = data;
-                        document.querySelector('form').reset();
-                    }
-                })
-
-
-
-                return false;
-              }
-            });
-
-            
-
-            $("#year").click(function() {
-
-                var optionMonth = $("#month").val();
-                var optionYear = $("#year").val();
-                var optionMonthText = $("#month option:selected").text();
-                var optionYearText = $("#year option:selected").text();
-                var employeeId = $("#employeeNumber").val()
-                if(optionMonth == "") {
-                    document.getElementById("month").style.borderColor = "red";
-                    document.getElementById("message").innerHTML = "You have to pick the month first";
-                    document.querySelector('form').reset();
-                } else {
-                    var monthYear = optionYear + "-" + optionMonth;
-                    var niceMonthYear = optionMonthText + " " + optionYearText;
-                    var payslipData = {'monthYear':monthYear,'employeeNumber':employeeId} 
-                    $.ajax({
-                    type: "POST",
-                    url: "payinfo.php",
-                    data: payslipData,
-                    success: function(data) {
-                        document.getElementById("payslipsName").innerHTML = "List of Payslips for " + niceMonthYear;
-                        document.getElementById("listOfPayslips").innerHTML = data;
-                        document.querySelector('form').reset();
-                    }
-                })
-                }
-
-          });
-
-          } );
-
-          </script>
-
-	</head>
-	<body>
-
-  <!-- navbar section -->
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/custom.js"></script>
+</head>
+<body>
     <?php include "navbar.php"; ?>
 
         <div class="container-fluid px-1 py-5 mx-auto">
@@ -181,11 +77,5 @@
                 </div>
             </div>
         </div>
-
-
-        <script src="js/popper.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/form.js"></script>
-        <script src="js/custom.js"></script>
     </body>
 </html>

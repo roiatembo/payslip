@@ -23,7 +23,7 @@ foreach ($employees as $employee) {
 
   $data[] = [
     "value" => "",
-    "fullName" => $fullName,
+    "label" => $fullName,
     "empn" => $employeeId,
     "accountNumber" => $accountNumber,
     "bank" => $bank,
