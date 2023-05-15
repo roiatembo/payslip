@@ -49,11 +49,11 @@
                 // output data of each row
                 while($row = mysqli_fetch_assoc($result)) {
                     $fullName = $row["fullName"];
-                    $employeeNumber = $row["employeeNumber"];
+                    $employeeId = $row["id"];
                 echo "
                 { value: \"\",
                     label: \"$fullName\",
-                    empn: \"$employeeNumber\"
+                    empn: \"$employeeId\"
                 },
                 
                 ";
@@ -95,6 +95,7 @@
                 var optionYear = $("#year").val();
                 var optionMonthText = $("#month option:selected").text();
                 var optionYearText = $("#year option:selected").text();
+                var employeeId = $("#employeeNumber").val()
                 if(optionMonth == "") {
                     document.getElementById("month").style.borderColor = "red";
                     document.getElementById("message").innerHTML = "You have to pick the month first";
@@ -102,7 +103,7 @@
                 } else {
                     var monthYear = optionYear + "-" + optionMonth;
                     var niceMonthYear = optionMonthText + " " + optionYearText;
-                    var payslipData = {'monthYear':monthYear} 
+                    var payslipData = {'monthYear':monthYear,'employeeNumber':employeeId} 
                     $.ajax({
                     type: "POST",
                     url: "payinfo.php",

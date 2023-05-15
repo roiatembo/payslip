@@ -26,40 +26,69 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
           <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-    <script>
-          $( function() {
-            var availableTags = [
-            <?php
-              $sql = "SELECT id, fullName, employeeNumber FROM employees";
-              $result = mysqli_query($conn, $sql);
-        
-                if (mysqli_num_rows($result) > 0) {
-                // output data of each row
-                while($row = mysqli_fetch_assoc($result)) {
-                    $fullName = $row["fullName"];
-                    $employeeNumber = $row["employeeNumber"];
-                echo "
-                { value: \"\",
-                    label: \"$fullName\",
-                    empn: \"$employeeNumber\"
-                },
-                
-                ";
-                }
-                } ?>
-                
-             
-            ];
-            $( "#fname" ).autocomplete({
-              source: availableTags,
-              select: function (event, ui) {
-                $("#employeeNumber").val(ui.item.empn);
-                $("#fname").val(ui.item.label);
-                return false;
-              }
-            });
-          } );
-          </script>
+          <script>
+  $(function() {
+    var availableTags = [
+      <?php
+      $stmt = mysqli_prepare($conn, "SELECT id, fullName, employeeNumber FROM employees");
+      mysqli_stmt_execute($stmt);
+      $result = mysqli_stmt_get_result($stmt);
+
+      if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+          $fullName = $row["fullName"];
+          $employeeId = $row["id"];
+
+          // Use prepared statements to prevent SQL injection attacks
+          $stmt_two = mysqli_prepare($conn, "SELECT id, accountNumber, bank, branch, branchCode FROM banking_details WHERE employeeId = ?");
+          mysqli_stmt_bind_param($stmt_two, "i", $employeeId);
+          mysqli_stmt_execute($stmt_two);
+          $result_two = mysqli_stmt_get_result($stmt_two);
+
+          if (mysqli_num_rows($result_two) > 0) {
+            $row_two = mysqli_fetch_assoc($result_two);
+            $accountNumber = $row_two["accountNumber"];
+            $bank = $row_two["bank"];
+            $branch = $row_two["branch"];
+            $branchCode = $row_two["branchCode"];
+            $bankingDetailsId = $row_two["id"];
+          } else {
+            $accountNumber = "";
+            $bank = "";
+            $branch = "";
+            $branchCode = "";
+            $bankingDetailsId = 0;
+          }
+          echo "
+          { value: \"\",
+              label: \"$fullName\",
+              empn: \"$employeeId\",
+              accountNumber: \"$accountNumber\",
+              bank: \"$bank\",
+              branch: \"$branch\",
+              branchCode: \"$branchCode\",
+              bankingDetailsId: \"$bankingDetailsId\"
+          },";
+        }
+      }
+      ?>
+    ];
+
+    $("#fname").autocomplete({
+      source: availableTags,
+      select: function(event, ui) {
+        $("#employeeNumber").val(ui.item.empn);
+        $("#fname").val(ui.item.label);
+        $("#accountNumber").val(ui.item.accountNumber);
+        $("#bank").val(ui.item.bank)
+        $("#branch").val(ui.item.branch)
+        $("#branchCode").val(ui.item.branchCode)
+        $("#bankingDetailsId").val(ui.item.bankingDetailsId)
+        return false;
+      }
+    });
+  });
+</script>
 
 	</head>
 	<body>
@@ -81,6 +110,16 @@
                             </div>
                             <div class="row justify-content-between text-left">
                                 <div style="display: block;" class="form-group col-sm-12 flex-column d-flex"> <label class="form-control-label px-3">Pay Date<span class="text-danger"> *</span></label> <input type="date" id="payDate" name="payDate" placeholder=""required> </div>
+                            </div>
+                            <h6 class="text-center mb-4">Banking Details</h6>
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Bank Name</label> <input type="text" id="bank" name="bankName" placeholder=""> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Account Number</label> <input type="text" id="accountNumber" name="accountNumber" placeholder=""> </div>
+                            </div>
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Branch</label> <input type="text" id="branch" name="branch" placeholder=""> </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Branch Code</label> <input type="text" id="branchCode" name="branchCode" placeholder=""> </div>
+                                <input type="text" name="bankingDetailsId" id="bankingDetailsId">
                             </div>
                             <h6 class="text-center mb-4">Enter Month and Year Of Payslip</h6>
                             <div class="row justify-content-between text-left">

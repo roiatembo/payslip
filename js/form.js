@@ -118,6 +118,12 @@ var extraIncome = {};
     var unpaidLeave = formData.get('unpaidLeave');
     var month = formData.get('month');
     var year = formData.get('year');
+    var bankName = formData.get('bankName');
+    var accountNumber = formData.get('accountNumber');
+    var branch = formData.get('branch');
+    var branchCode = formData.get('branchCode');
+    var bankingDetailsId = formData.get('bankingDetailsId');
+    console.log(bankingDetailsId);
     var monthYear = year + "-" + month;
 
     for (i=1;i<=rowNumber;i++) {
@@ -137,7 +143,7 @@ var extraIncome = {};
 
 
     var userdata = {'monthYear':monthYear,'employeeId':employeeId,'payDate':payDate,'normalRate':normalRate,'normalDays':normalDays,'bonusRate':bonusRate,'bonusDays':bonusDays,
-    'overtimeRate':overtimeRate,'overtimeHours':overtimeHours,'tax':tax,'uif':uif,'loan':loan,'uniform':uniform,'unionPay':unionPay,'unpaidLeave':unpaidLeave};
+    'overtimeRate':overtimeRate,'overtimeHours':overtimeHours,'tax':tax,'uif':uif,'loan':loan,'uniform':uniform,'unionPay':unionPay,'unpaidLeave':unpaidLeave, 'bankName':bankName, 'accountNumber':accountNumber,'branch':branch,'branchCode':branchCode,'bankingDetailsId':bankingDetailsId};
     
     if(!(jQuery.isEmptyObject(extraDeduction))) {
         userdata["extraDeductions"] = extraDeduction;
@@ -174,7 +180,7 @@ var extraIncome = {};
               }
               );
               $(document).ajaxError(function () {
-                document.getElementById("error").innerHTML = 'Oops something has gone wrong, you are missing some informations'; 
+                document.getElementById("error").innerHTML = 'Oops something has gone wrong, you are missing some information'; 
             })
               
   });

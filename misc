@@ -1,0 +1,59 @@
+<script>
+          $( function() {
+            var availableTags = [
+            <?php
+              $sql = "SELECT id, fullName, employeeNumber FROM employees";
+              $result = mysqli_query($conn, $sql);
+        
+                if (mysqli_num_rows($result) > 0) {
+                // output data of each row
+                while($row = mysqli_fetch_assoc($result)) {
+                    $fullName = $row["fullName"];
+                    $employeeNumber = $row["employeeNumber"];
+                    $sql_two = "SELECT accountNumber, bank, branch, branchCode FROM banking_details WHERE employeeId = $employeeNumber";
+                    $result_two = mysqli_query($conn, $sql_two);
+
+                    if (mysqli_num_rows($result_two) > 0) {
+                        $row_two = mysqli_fetch_assoc($result_two);
+                        $accountNumber = $row_two["accountNumber"];
+                        $bank = $row_two["bank"];
+                        $branch = $row_two["branch"];
+                        $branchCode = $row_two["branchCode"];
+                    } else {
+                        $accountNumber = "";
+                        $bank = "";
+                        $branch = "";
+                        $branchCode = "";
+                    }
+                echo "
+                { value: \"\",
+                    label: \"$fullName\",
+                    empn: \"$employeeNumber\",
+                    accountNumber: \"$accountNumber\",
+                    bank: \"$bank\",
+                    branch: \"$branch\",
+                    branchCode: \"$branchCode\"
+                    
+                    
+                },
+                
+                ";
+                }
+                } ?>
+                
+             
+            ];
+            $( "#fname" ).autocomplete({
+              source: availableTags,
+              select: function (event, ui) {
+                $("#employeeNumber").val(ui.item.empn);
+                $("#fname").val(ui.item.label);
+                $("#accountNumber").val(ui.item.accountNumber);
+                $("#bank").val(ui.item.bank)
+                $("#branch").val(ui.item.branch)
+                $("#branchCode").val(ui.item.branch)
+                return false;
+              }
+            });
+          } );
+          </script>
