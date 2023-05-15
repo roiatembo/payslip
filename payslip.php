@@ -1,7 +1,3 @@
-<?php
-     require("db_connect.php");
-?>
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -16,80 +12,39 @@
         	<!-- navbar stylsheet -->
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
 
-<link rel="stylesheet" href="fonts/icomoon/style.css">
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
 
-<link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
 
-<!-- Style -->
-<link rel="stylesheet" href="css/navstyle.css">
-	<link rel="stylesheet" href="css/form.css">
+    <!-- Style -->
+    <link rel="stylesheet" href="css/navstyle.css">
+    <link rel="stylesheet" href="css/form.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-          <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-          <script>
-  $(function() {
-    var availableTags = [
-      <?php
-      $stmt = mysqli_prepare($conn, "SELECT id, fullName, employeeNumber FROM employees");
-      mysqli_stmt_execute($stmt);
-      $result = mysqli_stmt_get_result($stmt);
-
-      if (mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_assoc($result)) {
-          $fullName = $row["fullName"];
-          $employeeId = $row["id"];
-
-          // Use prepared statements to prevent SQL injection attacks
-          $stmt_two = mysqli_prepare($conn, "SELECT id, accountNumber, bank, branch, branchCode FROM banking_details WHERE employeeId = ?");
-          mysqli_stmt_bind_param($stmt_two, "i", $employeeId);
-          mysqli_stmt_execute($stmt_two);
-          $result_two = mysqli_stmt_get_result($stmt_two);
-
-          if (mysqli_num_rows($result_two) > 0) {
-            $row_two = mysqli_fetch_assoc($result_two);
-            $accountNumber = $row_two["accountNumber"];
-            $bank = $row_two["bank"];
-            $branch = $row_two["branch"];
-            $branchCode = $row_two["branchCode"];
-            $bankingDetailsId = $row_two["id"];
-          } else {
-            $accountNumber = "";
-            $bank = "";
-            $branch = "";
-            $branchCode = "";
-            $bankingDetailsId = 0;
-          }
-          echo "
-          { value: \"\",
-              label: \"$fullName\",
-              empn: \"$employeeId\",
-              accountNumber: \"$accountNumber\",
-              bank: \"$bank\",
-              branch: \"$branch\",
-              branchCode: \"$branchCode\",
-              bankingDetailsId: \"$bankingDetailsId\"
-          },";
-        }
-      }
-      ?>
-    ];
-
-    $("#fname").autocomplete({
-      source: availableTags,
-      select: function(event, ui) {
-        $("#employeeNumber").val(ui.item.empn);
-        $("#fname").val(ui.item.label);
-        $("#accountNumber").val(ui.item.accountNumber);
-        $("#bank").val(ui.item.bank)
-        $("#branch").val(ui.item.branch)
-        $("#branchCode").val(ui.item.branchCode)
-        $("#bankingDetailsId").val(ui.item.bankingDetailsId)
-        return false;
-      }
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script>
+    $(function(){
+        $.ajax({
+            url: "db_query.php",
+            dataType: "json",
+            success: function(data) {
+                $("#fname").autocomplete({
+                    source: data,
+                    select: function(event, ui) {
+                        $("#employeeNumber").val(ui.item.empn);
+                        $("#fname").val(ui.item.label);
+                        $("#accountNumber").val(ui.item.accountNumber);
+                        $("#bank").val(ui.item.bank);
+                        $("#branch").val(ui.item.branch);
+                        $("#branchCode").val(ui.item.branchCode);
+                        $("#bankingDetailsId").val(ui.item.bankingDetailsId);
+                        return false;
+                    }
+                });
+            }
+        });
     });
-  });
 </script>
-
 	</head>
 	<body>
 

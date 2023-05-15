@@ -57,3 +57,45 @@
             });
           } );
           </script>
+
+ $(function() {
+    
+    $("#fname").autocomplete({
+      source: availableTags,
+      select: function(event, ui) {
+        $("#employeeNumber").val(ui.item.empn);
+        $("#fname").val(ui.item.label);
+        $("#accountNumber").val(ui.item.accountNumber);
+        $("#bank").val(ui.item.bank)
+        $("#branch").val(ui.item.branch)
+        $("#branchCode").val(ui.item.branchCode)
+        $("#bankingDetailsId").val(ui.item.bankingDetailsId)
+        return false;
+      }
+    });
+  });
+
+    <script>
+        // console.log("hello world");
+        alert("hello world");
+        $(function() {
+            $.ajax({
+            url: "db_query.php",
+            dataType: "json",
+            success: function(data) {
+                $("#fname").autocomplete({
+                source: data,
+                select: function(event, ui) {
+                    $("#employeeNumber").val(ui.item.empn);
+                    $("#fname").val(ui.item.label);
+                    $("#accountNumber").val(ui.item.accountNumber);
+                    $("#bank").val(ui.item.bank);
+                    $("#branch").val(ui.item.branch);
+                    $("#branchCode").val(ui.item.branchCode);
+                    $("#bankingDetailsId").val(ui.item.bankingDetailsId);
+                    return false;
+                }
+            }
+            })
+        }      
+    </script>
