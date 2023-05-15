@@ -34,33 +34,34 @@ $(function(){
             });
         }
     });
-});
 
-$year.click(function() {
-    let optionMonth = $month.val();
-    let optionYear = $year.val();
-    let optionMonthText = $month.find('option:selected').text();
-    let optionYearText = $year.find('option:selected').text();
-    let employeeId = $employeeNumber.val();
-
-    if (optionMonth === "") {
-      $month.css("border-color", "red");
-      $message.html("You have to pick the month first");
-      $('form')[0].reset();
-    } else {
-      let monthYear = optionYear + "-" + optionMonth;
-      let niceMonthYear = optionMonthText + " " + optionYearText;
-      let payslipData = { monthYear: monthYear, employeeNumber: employeeId };
-      // Send AJAX request to payinfo.php
-      $.ajax({
-        type: "POST",
-        url: "payinfo.php",
-        data: payslipData,
-        success: function(data) {
-          $payslipsName.html("List of Payslips for " + niceMonthYear);
-          $listOfPayslips.html(data);
+    $year.click(function() {
+        let optionMonth = $month.val();
+        let optionYear = $year.val();
+        let optionMonthText = $month.find('option:selected').text();
+        let optionYearText = $year.find('option:selected').text();
+        let employeeId = $employeeNumber.val();
+    
+        if (optionMonth === "") {
+          $month.css("border-color", "red");
+          $message.html("You have to pick the month first");
           $('form')[0].reset();
+        } else {
+          let monthYear = optionYear + "-" + optionMonth;
+          let niceMonthYear = optionMonthText + " " + optionYearText;
+          let payslipData = { monthYear: monthYear, employeeNumber: employeeId };
+          // Send AJAX request to payinfo.php
+          $.ajax({
+            type: "POST",
+            url: "payinfo.php",
+            data: payslipData,
+            success: function(data) {
+              $payslipsName.html("List of Payslips for " + niceMonthYear);
+              $listOfPayslips.html(data);
+              $('form')[0].reset();
+            }
+          });
         }
       });
-    }
-  });
+});
+
