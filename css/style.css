@@ -8381,3 +8381,49 @@ h1, h2, h3, h4, h5,
         border: 1px solid transparent;
         background: #e3b04b;
         color: #fff; }
+        #fname {
+          position: relative; /* Create a stacking context */
+          z-index: 2000; /* Put the input on top */
+        }
+        
+        .ui-autocomplete {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          z-index: 3000; /* Put the autocomplete dropdown on top of the input */
+          float: left;
+          min-width: 160px;
+          padding: 5px 0;
+          margin: 2px 0 0 0;
+          list-style: none;
+          background-color: #fff;
+          border-color: #ccc;
+          border-color: rgba(0,0,0,.2);
+          border-style: solid;
+          border-width: 1px;
+          border-radius: 4px;
+          -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+        }
+        
+        .ui-autocomplete .ui-menu-item {
+          padding: 0;
+          margin: 0;
+          cursor: pointer;
+          display: block;
+          clear: both;
+          font-weight: normal;
+          line-height: 1.5em;
+        }
+        
+        .ui-autocomplete .ui-menu-item:hover {
+          background-color: #f5f5f5;
+        }
+        
+        .ui-autocomplete .ui-state-focus {
+          background-color: #ddd;
+        }
+        
+        .ui-helper-hidden-accessible {
+          display: none;
+        }

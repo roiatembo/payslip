@@ -1,16 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "dithetoc_roia";
-$password = "rolanga4";
-$dbname = "dithetoc_payslip";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
-
+require ("db_connect.php");
 
 if (isset($_POST["employeeId"])) {
   $monthYear = $_POST["monthYear"];
@@ -77,21 +66,6 @@ if ($result_two->num_rows > 0) {
     echo "Error: " . $sql . "<br>" . $conn->error;
   }
 }
-
-// $sql_stmt_two = "SELECT accountNumber FROM banking_details WHERE id = $bankingDetailsId";
-// $result_two = mysqli_query($conn, $sql_stmt_two);
-// if (mysqli_num_rows($result_two) > 0) {
-//   $update_sql = "UPDATE banking_details SET branchCode = $branchCode, accountNumber = $accountNumber, bank = $bankName, branch = $branch WHERE id = $bankingDetailsId";
-//   mysqli_query($conn, $update_sql);
-// } else {
-//   $insert_sql = "INSERT INTO banking_details (employeeId, branchCode, accountNumber, bank, branch) VALUES ('$employeeId', '$branchCode', '$accountNumber', '$bankName', '$branch')";
-//   if ($conn->query($insert_sql) === TRUE) {
-//     echo "New record created successfully";
-//   } else {
-//     echo "Error: " . $sql . "<br>" . $conn->error;
-//   }
-// }
-
 
 $conn->close();
 }

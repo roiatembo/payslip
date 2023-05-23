@@ -57,3 +57,60 @@
             });
           } );
           </script>
+
+ $(function() {
+    
+    $("#fname").autocomplete({
+      source: availableTags,
+      select: function(event, ui) {
+        $("#employeeNumber").val(ui.item.empn);
+        $("#fname").val(ui.item.label);
+        $("#accountNumber").val(ui.item.accountNumber);
+        $("#bank").val(ui.item.bank)
+        $("#branch").val(ui.item.branch)
+        $("#branchCode").val(ui.item.branchCode)
+        $("#bankingDetailsId").val(ui.item.bankingDetailsId)
+        return false;
+      }
+    });
+  });
+
+    <script>
+        // console.log("hello world");
+        alert("hello world");
+        $(function() {
+            $.ajax({
+            url: "db_query.php",
+            dataType: "json",
+            success: function(data) {
+                $("#fname").autocomplete({
+                source: data,
+                select: function(event, ui) {
+                    $("#employeeNumber").val(ui.item.empn);
+                    $("#fname").val(ui.item.label);
+                    $("#accountNumber").val(ui.item.accountNumber);
+                    $("#bank").val(ui.item.bank);
+                    $("#branch").val(ui.item.branch);
+                    $("#branchCode").val(ui.item.branchCode);
+                    $("#bankingDetailsId").val(ui.item.bankingDetailsId);
+                    return false;
+                }
+            }
+            })
+        }      
+    </script>
+
+
+    // $sql_stmt_two = "SELECT accountNumber FROM banking_details WHERE id = $bankingDetailsId";
+// $result_two = mysqli_query($conn, $sql_stmt_two);
+// if (mysqli_num_rows($result_two) > 0) {
+//   $update_sql = "UPDATE banking_details SET branchCode = $branchCode, accountNumber = $accountNumber, bank = $bankName, branch = $branch WHERE id = $bankingDetailsId";
+//   mysqli_query($conn, $update_sql);
+// } else {
+//   $insert_sql = "INSERT INTO banking_details (employeeId, branchCode, accountNumber, bank, branch) VALUES ('$employeeId', '$branchCode', '$accountNumber', '$bankName', '$branch')";
+//   if ($conn->query($insert_sql) === TRUE) {
+//     echo "New record created successfully";
+//   } else {
+//     echo "Error: " . $sql . "<br>" . $conn->error;
+//   }
+// }
